@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello6
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello6
+  template:
+    metadata:
+      labels:
+        app: hello6
+    spec:
+      containers:
+      - name: hello6-api
+        image: ${IMAGE_HOST}/hello6-api:1.0.0.2
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: COREFX_DEPLOY_NAME
+          value: hello6
+        - name: COREFX_API_NAME
+          value: hello6-dev
+        - name: HELLO_HELLODB_CONN
+          value: ${HELLO_HELLODB_CONN}
+        - name: HELLO_REDIS_CACHE_CONN
+          value: ${HELLO_REDIS_CACHE_CONN}
